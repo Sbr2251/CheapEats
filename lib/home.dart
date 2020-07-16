@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'widgets.dart';
 
-class Notifications extends StatefulWidget {
-  @override
-  _NotificationsState createState() => _NotificationsState();
-}
-
-class _NotificationsState extends State<Notifications> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
+      body: Center(
+        child: Text(
+          "Done!",
+        ),
+      ),
       bottomNavigationBar: Bar(),
     );
   }
