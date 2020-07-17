@@ -2,21 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'home.dart';
+import 'notifications.dart';
+import 'profile.dart';
 
 void main() {
   runApp(new MaterialApp(
     theme: ThemeData.dark().copyWith(
-      backgroundColor: Color(0xFF2C2C2C),
-      //primaryColor: Color(0xFF2C2C2C),
-      textTheme: TextTheme(
-        bodyText2: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 30.0,
-          color: Colors.orange,
-          fontFamily: 'Comfort',
+        backgroundColor: Color(0xFF2C2C2C),
+        //primaryColor: Color(0xFF2C2C2C),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30.0,
+            color: Colors.orange,
+            fontFamily: 'Comfort',
+          ),
         ),
-      ),
-    ),
+        iconTheme: IconThemeData(color: Color(0xFF2C2C2C))),
     home: new MyApp(),
   ));
 }
@@ -29,22 +31,94 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Home();
-    // return new SplashScreen(
-    //     seconds: 4,
-    //     navigateAfterSeconds: new AfterSplash(),
-    //     title: new Text(
-    //       'CheapEats',
-    //       style: new TextStyle(
-    //           fontWeight: FontWeight.bold,
-    //           fontSize: 28.0,
-    //           fontFamily: 'Comfort',
-    //           color: Colors.orange),
-    //     ),
-    //     image: Image.asset('assets/loader-2.gif'),
-    //     imageBackground: AssetImage('assets/Capture.png'),
-    //     styleTextUnderTheLoader: new TextStyle(),
-    //     photoSize: 300.0,
-    //     loaderColor: Colors.orange);
+    return new SplashScreen(
+        seconds: 4,
+        navigateAfterSeconds: new AfterSplash(),
+        title: new Text(
+          'CheapEats',
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 28.0,
+              fontFamily: 'Comfort',
+              color: Colors.orange),
+        ),
+        image: Image.asset('assets/loader-2.gif'),
+        imageBackground: AssetImage('assets/Capture.png'),
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 300.0,
+        loaderColor: Colors.orange);
+  }
+}
+
+class AfterSplash extends StatefulWidget {
+  @override
+  _AfterSplashState createState() => _AfterSplashState();
+}
+
+class _AfterSplashState extends State<AfterSplash> {
+  PageController _pageController = PageController();
+  void _onItemTapped(int selectedIndex) {
+    _pageController.jumpToPage(selectedIndex);
+  }
+
+  var _currentIndex = 0;
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        children: <Widget>[Home(), Notifications(), Profile()],
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
+        backgroundColor: Colors.black87,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.restaurant,
+              color: _currentIndex == 0 ? Colors.orange : Colors.white38,
+            ),
+            title: Text(
+              'Restaurants',
+              style: TextStyle(
+                color: _currentIndex == 0 ? Colors.orange : Colors.white38,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications,
+              color: _currentIndex == 1 ? Colors.orange : Colors.white38,
+            ),
+            title: Text(
+              'Notifications',
+              style: TextStyle(
+                color: _currentIndex == 1 ? Colors.orange : Colors.white38,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: _currentIndex == 2 ? Colors.orange : Colors.white38,
+            ),
+            title: Text(
+              'Profile',
+              style: TextStyle(
+                color: _currentIndex == 2 ? Colors.orange : Colors.white38,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

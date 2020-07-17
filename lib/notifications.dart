@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'widgets.dart';
 
 class Notifications extends StatefulWidget {
   @override
@@ -11,7 +10,11 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Bar(),
+      body: Center(
+        child: Text(
+          "Notifications",
+        ),
+      ),
     );
   }
 }
