@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'notifications.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -27,7 +28,7 @@ BottomNavigationBar bar = BottomNavigationBar(
         color: Colors.orange,
       ),
       title: Text(
-        'Notifications',
+        'Feed',
         style: TextStyle(
           color: Colors.orange,
         ),
@@ -55,20 +56,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new SplashScreen(
-        seconds: 4,
-        navigateAfterSeconds: new AfterSplash(),
+        seconds: 10,
+        navigateAfterSeconds: new Notifications(),
         title: new Text(
           'CheapEats',
           style: new TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 28.0,
+              fontSize: 18.0,
               fontFamily: 'Comfort',
               color: Colors.orange),
         ),
         image: Image.asset('assets/loader-2.gif'),
         imageBackground: AssetImage('assets/Capture.png'),
         styleTextUnderTheLoader: new TextStyle(),
-        photoSize: 300.0,
+        photoSize: 150.0,
         loaderColor: Colors.orange);
   }
 }
