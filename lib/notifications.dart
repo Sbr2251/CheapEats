@@ -42,6 +42,8 @@ class _NotificationsState extends State<Notifications> {
                       backgroundImage: AssetImage('assets/${foodFeed[index].restaurantPic}'),
                       radius: 30.0,
                   ),
+                  trailing: Text(foodFeed[index].restaurantDistance),
+                  contentPadding: EdgeInsets.symmetric(horizontal:16.0),
                 )
               );
             },
