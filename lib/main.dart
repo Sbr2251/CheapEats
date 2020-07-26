@@ -83,11 +83,11 @@ class _AfterSplashState extends State<AfterSplash> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.restaurant,
+              Icons.home,
               color: _currentIndex == 0 ? Colors.orange : Colors.white38,
             ),
             title: Text(
-              'Restaurants',
+              'Home',
               style: TextStyle(
                 color: _currentIndex == 0 ? Colors.orange : Colors.white38,
               ),
