@@ -1,32 +1,50 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'ListCard.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
+  final ListCard card;
+  Detail(this.card);
+
+  @override
+  _DetailState createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  @override
+  final int price = Random().nextInt(10);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Swadeshi'),
+        title: Text(widget.card.name),
       ),
       body: Column(
         children: <Widget>[
-          Stack(children: <Widget>[
+          Stack(alignment: Alignment.bottomCenter, children: <Widget>[
             Hero(
-              tag: 'detail',
-              child: SafeArea(
-                child: Image.asset('assets/swadeshi.jpeg'),
+              tag: widget.card.name,
+              child: Expanded(
+                child: Image.asset(
+                  widget.card.image,
+                ),
               ),
+            ),
+            Container(
+              height: 40,
+              color: Color(0xFF2C2C2C),
             ),
             Positioned(
                 left: 0,
                 right: 0,
-                bottom: 100,
-                top: 335,
+                bottom: 30,
                 child: Divider(
                   color: Colors.orange,
                   thickness: 5,
                 )),
             Positioned(
-              right: 170,
+              left: MediaQuery.of(context).size.width / 2 - 25,
               bottom: 0,
               child: CircleAvatar(
                 backgroundColor: Colors.orange,
@@ -41,10 +59,20 @@ class Detail extends StatelessWidget {
               ),
             ),
             Positioned(
-              child: Icon(
-                Icons.favorite,
-                color: Colors.grey,
-                size: 30,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (widget.card.favorited == Colors.grey)
+                      widget.card.favorited = Colors.pink;
+                    else
+                      widget.card.favorited = Colors.grey;
+                  });
+                },
+                child: Icon(
+                  Icons.favorite,
+                  color: widget.card.favorited,
+                  size: 30,
+                ),
               ),
               bottom: 0,
               right: 20,
@@ -55,14 +83,10 @@ class Detail extends StatelessWidget {
             // Details of restuarant
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              IconTheme(
-                data: IconThemeData(color: Colors.orange, size: 40),
-                child: Icon(Icons.monetization_on),
-              ),
               Column(
                 children: <Widget>[
                   Container(
-                    child: Text('5.99'),
+                    child: Text('$price.99'),
                   ),
                   Container(
                     child: Text(
@@ -72,14 +96,11 @@ class Detail extends StatelessWidget {
                   ),
                 ],
               ),
-              IconTheme(
-                data: IconThemeData(color: Colors.orange, size: 40),
-                child: Icon(Icons.watch_later),
-              ),
+              Text('|'),
               Column(
                 children: <Widget>[
                   Container(
-                    child: Text('8:30'),
+                    child: Text('${widget.card.takeOutTime}'),
                   ),
                   Container(
                     child: Text(
@@ -89,14 +110,11 @@ class Detail extends StatelessWidget {
                   ),
                 ],
               ),
-              IconTheme(
-                data: IconThemeData(color: Colors.orange, size: 40),
-                child: Icon(Icons.restaurant),
-              ),
+              Text('|'),
               Column(
                 children: <Widget>[
                   Container(
-                    child: Text('Indian'),
+                    child: Text('Veg'),
                   ),
                   Container(
                     child: Text(
@@ -115,7 +133,7 @@ class Detail extends StatelessWidget {
           ),
           SizedBox(height: 30),
           Text(
-            'Location: 7964 N MacArthur Blvd',
+            'Location: Location Will Go Here',
             style: TextStyle(fontSize: 22),
             textAlign: TextAlign.center,
           ),
