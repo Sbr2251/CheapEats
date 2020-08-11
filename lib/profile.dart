@@ -20,6 +20,8 @@ class Achievements {
   }
 }
 
+double textSize = 17;
+
 List<Achievements> targetList = [
   Achievements(
       r: 'CheapEats',
@@ -117,7 +119,7 @@ class Profile extends StatelessWidget {
                 child: Text('Achievements:',
                     textAlign: TextAlign.left,
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 25))),
             Container(height: 3),
             SizedBox(
                 width: 350,
@@ -138,7 +140,9 @@ class Profile extends StatelessWidget {
                         title: Row(
                           children: <Widget>[
                             Text(targetList[index].restaurantName,
-                                style: TextStyle(color: Colors.orange)),
+                                style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: textSize - 2)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -149,21 +153,24 @@ class Profile extends StatelessWidget {
                                           targetList[index].progressMade +
                                           '/5)',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.orange)),
+                                          fontSize: textSize,
+                                          color: Colors.orange)),
                                   Text(
                                       targetList[index].goal2 +
                                           '  (' +
                                           targetList[index].progressMade +
                                           '/5)',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.orange)),
+                                          fontSize: textSize,
+                                          color: Colors.orange)),
                                   Text(
                                       targetList[index].goal3 +
                                           '  (' +
                                           targetList[index].progressMade +
                                           '/5)',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.orange))
+                                          fontSize: textSize,
+                                          color: Colors.orange))
                                 ],
                               ),
                             )
@@ -172,7 +179,7 @@ class Profile extends StatelessWidget {
                         leading: CircularPercentIndicator(
                           radius: 50.0,
                           lineWidth: 5.0,
-                          percent: targetList[index].percentage,
+                          percent: 1 - targetList[index].percentage,
                           center: Text(
                             (targetList[index].percentage * 100)
                                     .toInt()
@@ -180,8 +187,8 @@ class Profile extends StatelessWidget {
                                 '%',
                             style: TextStyle(fontSize: 15),
                           ),
-                          progressColor: Colors.blue,
-                          backgroundColor: Colors.grey,
+                          progressColor: Colors.grey.shade700,
+                          backgroundColor: Colors.blue,
                         )),
                   );
                 },

@@ -4,6 +4,7 @@ import 'package:splashscreen/splashscreen.dart';
 import 'home.dart';
 import 'notifications.dart';
 import 'profile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -84,23 +85,27 @@ class _AfterSplashState extends State<AfterSplash> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
+              size: 25,
               color: _currentIndex == 0 ? Colors.orange : Colors.white38,
             ),
             title: Text(
               'Home',
               style: TextStyle(
+                fontSize: 15,
                 color: _currentIndex == 0 ? Colors.orange : Colors.white38,
               ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.notifications,
+              FontAwesomeIcons.comments,
               color: _currentIndex == 1 ? Colors.orange : Colors.white38,
+              size: 25,
             ),
             title: Text(
-              'Notifications',
+              'Feed',
               style: TextStyle(
+                fontSize: 15,
                 color: _currentIndex == 1 ? Colors.orange : Colors.white38,
               ),
             ),
@@ -108,11 +113,13 @@ class _AfterSplashState extends State<AfterSplash> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
+              size: 25,
               color: _currentIndex == 2 ? Colors.orange : Colors.white38,
             ),
             title: Text(
               'Profile',
               style: TextStyle(
+                fontSize: 15,
                 color: _currentIndex == 2 ? Colors.orange : Colors.white38,
               ),
             ),
