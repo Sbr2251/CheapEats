@@ -32,5 +32,16 @@
 	<string>1:623107850603:ios:cd1138cf64ee1a32100c2e</string>
 	<key>DATABASE_URL</key>
 	<string>https://cheapeats-65e99.firebaseio.com</string>
+	<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+					<array>
+						<string>com.googleusercontent.apps.623107850603-4l7miin9ipfhkvargvanbee4mtps6qb9</string>
+					</array>
+			</dict>
+		</array>
 </dict>
 </plist>

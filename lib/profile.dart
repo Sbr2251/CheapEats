@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'register.dart';
+import 'login.dart';
 
 class Achievements {
   String restaurantName;
@@ -46,12 +49,20 @@ List<Achievements> targetList = [
       n: 0.2),
 ];
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final _auth = FirebaseAuth.instance;
+  String userName = 'Not Logged In';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          title: Text(userName),
           actions: <Widget>[
             IconButton(
                 icon: const Icon(Icons.settings),
@@ -194,6 +205,32 @@ class Profile extends StatelessWidget {
                 },
               ),
             ),
+            RaisedButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Register()),
+                );
+                FirebaseUser user = await _auth.currentUser();
+                setState(() {
+                  userName = user.displayName;
+                });
+              },
+              child: Text('Register'),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+                FirebaseUser user = await _auth.currentUser();
+                setState(() {
+                  userName = user.displayName;
+                });
+              },
+              child: Text('Login'),
+            )
           ],
         ));
   }

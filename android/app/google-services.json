@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "623107850603",
+    "firebase_url": "https://cheapeats-65e99.firebaseio.com",
+    "project_id": "cheapeats-65e99",
+    "storage_bucket": "cheapeats-65e99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623107850603:android:9c52856eac6caa9d100c2e",
+        "android_client_info": {
+          "package_name": "com.CheapEats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623107850603-kqvrtjqu39fgkrq68agoinrrjtevcg6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.CheapEats",
+            "certificate_hash": "565e8a2cdb9a600fbf51af4efbe956c337a53f1e"
+          }
+        },
+        {
+          "client_id": "623107850603-l03lt91q6odnp13n2j4abbd80mfi5s0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTaXB93jNIuIlnzXM5hMil8eXaChmLcYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623107850603-l03lt91q6odnp13n2j4abbd80mfi5s0b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "623107850603-4l7miin9ipfhkvargvanbee4mtps6qb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cheapeats"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

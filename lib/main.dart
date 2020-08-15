@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         image: Image.asset('assets/loader-2.gif'),
         imageBackground: AssetImage('assets/Capture.png'),
         styleTextUnderTheLoader: new TextStyle(),
-        photoSize: 300.0,
+        photoSize: 250.0,
         loaderColor: Colors.orange);
   }
 }
