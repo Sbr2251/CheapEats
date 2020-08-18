@@ -74,7 +74,7 @@ class _DetailState extends State<Detail> {
                 left: MediaQuery.of(context).size.width / 2 - 40,
                 bottom: 0,
                 child: CircleAvatar(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Colors.white,
                   backgroundImage: AssetImage(widget.card.logo),
                   radius: 40,
                 ),
@@ -106,7 +106,9 @@ class _DetailState extends State<Detail> {
                 Column(
                   children: <Widget>[
                     Container(
-                      child: Text('holder'),
+                      child: Text(selected == null
+                          ? '-'
+                          : '\$${widget.card.prices[selected]}'),
                     ),
                     Container(
                       child: Text(
@@ -163,11 +165,12 @@ class _DetailState extends State<Detail> {
                       }),
                 ),
                 Flexible(
-                  flex: 3,
+                  flex: 2,
                   child: TextField(
-                    maxLength: 2,
                     decoration: InputDecoration(
-                      hintText: 'Max 3',
+                      hintText: selected != null
+                          ? 'Max ${widget.card.quantities[selected]}'
+                          : 'Select Item',
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 20.0),
                       border: OutlineInputBorder(
