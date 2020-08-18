@@ -1,21 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'ListCard.dart';
 
 class Detail extends StatefulWidget {
   final ListCard card;
-  Detail(this.card);
+  final DocumentSnapshot snap;
+  Detail(this.card, this.snap);
 
   @override
   _DetailState createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
+  Color col;
+  List<DropdownMenuItem<dynamic>> menuItems = [];
+  int selected;
+  @override
+  void initState() {
+    super.initState();
+    col = widget.snap['favorited'] ? Colors.pink : Colors.grey;
+    int count = 0;
+    for (String s in widget.card.items) {
+      menuItems.add(DropdownMenuItem(
+        child: Text(s),
+        value: count,
+      ));
+      count++;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.card.name),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () async {
+            await Firestore.instance.runTransaction((transaction) async {
+              DocumentSnapshot freshSnap =
+                  await transaction.get(widget.snap.reference);
+              await transaction.update(freshSnap.reference,
+                  {'favorited': col == Colors.grey ? false : true});
+            });
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -40,33 +71,26 @@ class _DetailState extends State<Detail> {
                     thickness: 5,
                   )),
               Positioned(
-                left: MediaQuery.of(context).size.width / 2 - 25,
+                left: MediaQuery.of(context).size.width / 2 - 40,
                 bottom: 0,
                 child: CircleAvatar(
                   backgroundColor: Colors.orange,
+                  backgroundImage: AssetImage(widget.card.logo),
                   radius: 40,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(45),
-                    child: CircleAvatar(
-                      child: Image.asset('assets/swadeshi.png'),
-                      radius: 35,
-                    ),
-                  ),
                 ),
               ),
               Positioned(
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     setState(() {
-                      if (widget.card.favorited == Colors.grey)
-                        widget.card.favorited = Colors.pink;
-                      else
-                        widget.card.favorited = Colors.grey;
+                      col = col == Colors.pink
+                          ? col = Colors.grey
+                          : col = Colors.pink;
                     });
                   },
                   child: Icon(
                     Icons.favorite,
-                    color: widget.card.favorited,
+                    color: col,
                     size: 30,
                   ),
                 ),
@@ -82,7 +106,7 @@ class _DetailState extends State<Detail> {
                 Column(
                   children: <Widget>[
                     Container(
-                      child: Text('${Random().nextInt(10)}.99'),
+                      child: Text('holder'),
                     ),
                     Container(
                       child: Text(
@@ -114,7 +138,7 @@ class _DetailState extends State<Detail> {
                     ),
                     Container(
                       child: Text(
-                        'Category',
+                        widget.card.cuisineType,
                         style: TextStyle(fontSize: 17),
                       ),
                     ),
@@ -123,9 +147,46 @@ class _DetailState extends State<Detail> {
               ],
             ),
             SizedBox(height: 50),
-            Text(
-              'Choose: 2 Naan or 3 Samosa',
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
+                  flex: 4,
+                  child: DropdownButton(
+                      items: menuItems,
+                      value: selected,
+                      hint: Text('Select Item'),
+                      onChanged: (value) {
+                        setState(() {
+                          selected = value;
+                        });
+                      }),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: TextField(
+                    maxLength: 2,
+                    decoration: InputDecoration(
+                      hintText: 'Max 3',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 1.0),
+                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
             SizedBox(height: 30),
             Text(

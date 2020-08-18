@@ -56,13 +56,16 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _auth = FirebaseAuth.instance;
-  String userName = 'Not Logged In';
+  String firstName;
+  String lastName;
+  bool _isLoggedIn = false;
+  String url;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(userName),
+          title: Text('Profile'),
           actions: <Widget>[
             IconButton(
                 icon: const Icon(Icons.settings),
@@ -72,7 +75,17 @@ class _ProfileState extends State<Profile> {
         ),
         body: Column(
           children: <Widget>[
-            Container(height: 25),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: _isLoggedIn
+                      ? NetworkImage(url)
+                      : AssetImage('assets/dummy.jpeg')),
+            ),
+            Text(_isLoggedIn ? firstName : 'Not Logged In',
+                style: TextStyle(fontSize: 15)),
+            SizedBox(height: 10),
             Row(
               children: <Widget>[
                 Expanded(flex: 1, child: Container()),
@@ -213,7 +226,8 @@ class _ProfileState extends State<Profile> {
                 );
                 FirebaseUser user = await _auth.currentUser();
                 setState(() {
-                  userName = user.displayName;
+                  firstName = user.displayName.split(" ")[0];
+                  lastName = user.displayName.split(" ")[1];
                 });
               },
               child: Text('Register'),
@@ -226,7 +240,10 @@ class _ProfileState extends State<Profile> {
                 );
                 FirebaseUser user = await _auth.currentUser();
                 setState(() {
-                  userName = user.displayName;
+                  firstName = user.displayName.split(" ")[0];
+                  lastName = user.displayName.split(" ")[1];
+                  url = user.photoUrl;
+                  _isLoggedIn = true;
                 });
               },
               child: Text('Login'),

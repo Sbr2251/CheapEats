@@ -38,6 +38,9 @@ class AuthProvider {
         accessToken: (await account.authentication).accessToken,
       ));
       if (res.user == null) return false;
+      UserUpdateInfo update = UserUpdateInfo();
+      update.photoUrl = account.photoUrl;
+      res.user.updateProfile(update);
       return true;
     } catch (e) {
       print(e.message);
