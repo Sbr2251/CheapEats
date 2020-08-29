@@ -15,6 +15,24 @@ class _DetailState extends State<Detail> {
   Color col;
   List<DropdownMenuItem<dynamic>> menuItems = [];
   int selected;
+  String selectedQuantity;
+  String selectedItem;
+  List<TableRow> rows = [
+    TableRow(children: [
+      Text(
+        'Item',
+        style: TextStyle(fontSize: 17),
+      ),
+      Text(
+        'Price',
+        style: TextStyle(fontSize: 17),
+      ),
+      Text(
+        'Quantity',
+        style: TextStyle(fontSize: 17),
+      )
+    ])
+  ];
   @override
   void initState() {
     super.initState();
@@ -31,6 +49,7 @@ class _DetailState extends State<Detail> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.card.name),
@@ -148,7 +167,14 @@ class _DetailState extends State<Detail> {
                 ),
               ],
             ),
-            SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: Text(
+                'Location: Location Will Go Here',
+                style: TextStyle(fontSize: 22),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -162,11 +188,15 @@ class _DetailState extends State<Detail> {
                         setState(() {
                           selected = value;
                         });
+                        selectedItem = widget.card.items[value];
                       }),
                 ),
                 Flexible(
                   flex: 2,
                   child: TextField(
+                    onChanged: (value) {
+                      selectedQuantity = value;
+                    },
                     decoration: InputDecoration(
                       hintText: selected != null
                           ? 'Max ${widget.card.quantities[selected]}'
@@ -191,18 +221,63 @@ class _DetailState extends State<Detail> {
                 )
               ],
             ),
-            SizedBox(height: 30),
-            Text(
-              'Location: Location Will Go Here',
-              style: TextStyle(fontSize: 22),
-              textAlign: TextAlign.center,
+            SizedBox(height: 10),
+            ButtonTheme(
+              minWidth: 70,
+              height: 25,
+              buttonColor: Colors.orange,
+              child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    rows.add(TableRow(children: [
+                      Text(
+                        selectedItem,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        '1.99',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Text(
+                        selectedQuantity,
+                        style: TextStyle(fontSize: 14),
+                      )
+                    ]));
+                  });
+                },
+                child: Text(
+                  'Add Item',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Comfort',
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
-            SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 30),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  width: size.width * .8,
+                  color: Colors.black26,
+                  height: 1080,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 25),
+                      child: Table(
+                        children: rows,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(40),
               child: ButtonTheme(
                 minWidth: 300,
-                height: 50,
+                height: 40,
                 child: RaisedButton(
                   onPressed: () {},
                   child: Text(
