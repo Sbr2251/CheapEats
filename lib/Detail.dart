@@ -19,6 +19,7 @@ class _DetailState extends State<Detail> {
   String selectedItem;
   List<TableRow> rows = [
     TableRow(children: [
+      Text(''),
       Text(
         'Item',
         style: TextStyle(fontSize: 17),
@@ -228,21 +229,54 @@ class _DetailState extends State<Detail> {
               buttonColor: Colors.orange,
               child: RaisedButton(
                 onPressed: () {
+                  bool noDuplicates = true;
                   setState(() {
-                    rows.add(TableRow(children: [
-                      Text(
-                        selectedItem,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        '1.99',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        selectedQuantity,
-                        style: TextStyle(fontSize: 14),
-                      )
-                    ]));
+                    for (TableRow row in rows) {
+                      if (row.key == ValueKey(selectedItem)) {
+                        row.children.removeAt(3);
+                        row.children.add(Text(
+                          selectedQuantity,
+                          style: TextStyle(fontSize: 14),
+                        ));
+                        noDuplicates = false;
+                      }
+                    }
+                    if (noDuplicates) {
+                      rows.add(TableRow(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                int toRemove = 0;
+                                for (int i = 0; i < rows.length; i++) {
+                                  if (rows[i].key == ValueKey(selectedItem)) {
+                                    toRemove = i;
+                                  }
+                                }
+                                rows.removeAt(toRemove);
+                              });
+                            },
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
+                          Text(
+                            selectedItem,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          Text(
+                            '1.99',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          Text(
+                            selectedQuantity,
+                            style: TextStyle(fontSize: 14),
+                          )
+                        ],
+                        key: ValueKey(selectedItem),
+                      ));
+                    }
                   });
                 },
                 child: Text(
@@ -261,13 +295,11 @@ class _DetailState extends State<Detail> {
                 child: Container(
                   width: size.width * .8,
                   color: Colors.black26,
-                  height: 1080,
+                  height: 100,
                   child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 25),
-                      child: Table(
-                        children: rows,
-                      ),
+                    child: Table(
+                      columnWidths: {0: FractionColumnWidth(.11)},
+                      children: rows,
                     ),
                   ),
                 ),
